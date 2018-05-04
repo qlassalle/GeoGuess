@@ -1,10 +1,11 @@
 package com.example.qlassalle.geoguess;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -16,18 +17,16 @@ public class PossibleLocation {
     private Double longitudeMin;
     private Double longitudeMax;
 
-//    private static final DecimalFormat df = new DecimalFormat(".#####");
     private static final String API_KEY = "AIzaSyB1iqthMV_WMs54Ljv4Ma97TlmXFvyoJXs";
 
-    public PossibleLocation(String name, Double latitudeMin, Double latitudeMax, Double longitudeMin, Double longitudeMax) {
+    public PossibleLocation(String name, Double latitudeMin, Double latitudeMax, Double longitudeMin,
+                            Double longitudeMax) {
         this.name = name;
         this.latitudeMin = latitudeMin;
         this.longitudeMin = longitudeMin;
         this.latitudeMax = latitudeMax;
         this.longitudeMax = longitudeMax;
     }
-
-    public PossibleLocation() {}
 
     private Point generateRandomLocation() {
         Point p = new Point();
@@ -37,7 +36,7 @@ public class PossibleLocation {
         return p;
     }
 
-    public Point getRandomLocation() throws IOException, ExecutionException, InterruptedException, JSONException {
+    public LatLng getRandomLocation() throws IOException, ExecutionException, InterruptedException, JSONException {
         Point p;
         boolean isAdressCorrect;
         String address;
@@ -54,7 +53,7 @@ public class PossibleLocation {
                 p.longitude = Double.valueOf(addressJson.getJSONObject("location").getString("lng"));
             }
         } while(!isAdressCorrect);
-        return p;
+        return new LatLng(p.latitude, p.longitude);
     }
 
     public String getName() {

@@ -55,8 +55,7 @@ public class SplitStreetView extends AppCompatActivity
     private Marker mMarker;
 
     private Deque<PossibleLocation> possibleLocation;
-
-    Point startingPoint;
+    private LatLng currentLocation;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -87,8 +86,10 @@ public class SplitStreetView extends AppCompatActivity
                         // its state.
                         if (savedInstanceState == null) {
                             try {
-                                changePosition(possibleLocation.pop().getRandomLocation());
-                            } catch (IOException | ExecutionException | JSONException | InterruptedException e) {
+                                currentLocation = possibleLocation.pop().getRandomLocation();
+                                changePosition(currentLocation);
+                            } catch (IOException | ExecutionException | JSONException
+                                    | InterruptedException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -109,16 +110,22 @@ public class SplitStreetView extends AppCompatActivity
 
                 map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
-                    public void onMapClick(LatLng latLng) {
+                    public void onMapClick(LatLng userLocation) {
                         try {
                             if(possibleLocation.isEmpty()) {
                                 System.out.println("\n\n\n fini \n\n\n ");
                                 System.exit(0);
+                            } else {
+                                GameLogic gl = new GameLogic();
+                                Double distance = gl.distance(currentLocation.latitude, userLocation.latitude,
+                                            currentLocation.longitude, userLocation.longitude,
+                                            0, 0) / 1000;
+                                System.out.println("\n\n\n Vous êtes à distance " + distance + "km \n\n");
+                                currentLocation = possibleLocation.pop().getRandomLocation();
+                                changePosition(currentLocation);
                             }
-                            Point p = possibleLocation.pop().getRandomLocation();
-                            System.out.println(p.latitude + "," + p.longitude);
-                            changePosition(p);
-                        } catch (IOException | ExecutionException | InterruptedException | JSONException e) {
+                        } catch (IOException | ExecutionException | InterruptedException
+                                | JSONException e) {
                             e.printStackTrace();
                         }
                     }
@@ -127,8 +134,7 @@ public class SplitStreetView extends AppCompatActivity
         });
     }
 
-    private void changePosition(Point p) {
-        LatLng newPosition = new LatLng(p.latitude, p.longitude);
+    private void changePosition(LatLng newPosition) {
         mStreetViewPanorama.setPosition(newPosition);
     }
 

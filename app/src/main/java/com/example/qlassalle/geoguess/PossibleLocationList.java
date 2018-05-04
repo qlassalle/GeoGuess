@@ -28,12 +28,12 @@ public class PossibleLocationList {
 
             add(new PossibleLocation("Paris", 48.89, 48.82, 2.30, 2.39));
             add(new PossibleLocation("Londres", 51.48, 51.53, -0.14, -0.10));
-//            add(new PossibleLocation("New York", -73.99, 40.70, -73.95, 40.84));
-//            add(new PossibleLocation("Shangai", 31.25, 121.41, 31.17, 121.47));
-//            add(new PossibleLocation("Pekin", 2.27, 48.89, 2.34, 48.82));
-//            add(new PossibleLocation("Rio de Janeiro", 2.27, 48.89, 2.34, 48.82));
-//            add(new PossibleLocation("Moscou", 2.27, 48.89, 2.34, 48.82));
-//            add(new PossibleLocation("Abidjan", 2.27, 48.89, 2.34, 48.82));
+            add(new PossibleLocation("New York", 40.75, 40.80, -73.98, -73.95));
+            add(new PossibleLocation("Shangai", 31.19, 31.25, 121.42, 121.49));
+            add(new PossibleLocation("Pekin", 39.87, 39.96, 116.30, 116.46));
+            add(new PossibleLocation("Rio de Janeiro", -22.95, -22.95, -43.21, -43.20));
+            add(new PossibleLocation("Moscou", 55.66, 55.84, 37.43, 37.79));
+            add(new PossibleLocation("Abidjan", 5.34, 5.37, -4.02, -3.98));
         }});
         NUMBER_OF_LOCATIONS_PER_GAME = possibleLocations.get(Level.EASY).size();
     }
@@ -45,9 +45,10 @@ public class PossibleLocationList {
         Set<PossibleLocation> locationSet = new HashSet<>(NUMBER_OF_LOCATIONS_PER_GAME);
         Random random = new Random();
         while (locationSet.size() != NUMBER_OF_LOCATIONS_PER_GAME) {
-            System.out.println(random.nextInt(locationList.size()));
             locationSet.add(locationList.get(random.nextInt(locationList.size())));
         }
+        // We use a Deque as a stack because it's easier to use here. We simply generate a bunch
+        // of possible locations, push them onto the stack and then pop them
         Deque<PossibleLocation> chosenLocations = new ArrayDeque<>();
         chosenLocations.addAll(locationSet);
         return chosenLocations;
