@@ -11,7 +11,6 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SplitStreetView splitStreetView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

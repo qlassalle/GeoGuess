@@ -36,6 +36,7 @@ import android.support.v7.app.AppCompatActivity;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Deque;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -53,7 +54,9 @@ public class SplitStreetView extends AppCompatActivity
 
     private Marker mMarker;
 
-    private PossibleLocation possibleLocation = new PossibleLocation();
+    private Deque<PossibleLocation> possibleLocation;
+
+    Point startingPoint;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -66,6 +69,9 @@ public class SplitStreetView extends AppCompatActivity
         } else {
             markerPosition = savedInstanceState.getParcelable(MARKER_POSITION_KEY);
         }
+
+        final PossibleLocationList possibleLocationList = new PossibleLocationList();
+        possibleLocation = possibleLocationList.pickRandomLocations(Level.EASY);
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
@@ -80,7 +86,11 @@ public class SplitStreetView extends AppCompatActivity
                         // Only need to set the position once as the streetview fragment will maintain
                         // its state.
                         if (savedInstanceState == null) {
-                            mStreetViewPanorama.setPosition(SYDNEY);
+                            try {
+                                changePosition(possibleLocation.pop().getRandomLocation());
+                            } catch (IOException | ExecutionException | JSONException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 });
@@ -101,7 +111,12 @@ public class SplitStreetView extends AppCompatActivity
                     @Override
                     public void onMapClick(LatLng latLng) {
                         try {
-                            Point p = possibleLocation.getRandomLocation();
+                            if(possibleLocation.isEmpty()) {
+                                System.out.println("\n\n\n fini \n\n\n ");
+                                System.exit(0);
+                            }
+                            Point p = possibleLocation.pop().getRandomLocation();
+                            System.out.println(p.latitude + "," + p.longitude);
                             changePosition(p);
                         } catch (IOException | ExecutionException | InterruptedException | JSONException e) {
                             e.printStackTrace();
@@ -110,6 +125,11 @@ public class SplitStreetView extends AppCompatActivity
                 });
             }
         });
+    }
+
+    private void changePosition(Point p) {
+        LatLng newPosition = new LatLng(p.latitude, p.longitude);
+        mStreetViewPanorama.setPosition(newPosition);
     }
 
     @Override
@@ -136,10 +156,5 @@ public class SplitStreetView extends AppCompatActivity
 
     @Override
     public void onMarkerDrag(Marker marker) {
-    }
-
-    private void changePosition(Point p) {
-        LatLng newPosition = new LatLng(p.y, p.x);
-        mStreetViewPanorama.setPosition(newPosition);
     }
 }

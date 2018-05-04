@@ -8,40 +8,56 @@ import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
-/**
- * Created by qlassalle on 20/04/2018.
- */
-
 public class PossibleLocation {
 
-    Double xMin = 2.27;
-    Double yMin = 48.89;
-    Double xMax = 2.34;
-    Double yMax = 48.82;
+    private String name;
+    private Double latitudeMin;
+    private Double latitudeMax;
+    private Double longitudeMin;
+    private Double longitudeMax;
 
-    private static final DecimalFormat df = new DecimalFormat(".#####");
+//    private static final DecimalFormat df = new DecimalFormat(".#####");
     private static final String API_KEY = "AIzaSyB1iqthMV_WMs54Ljv4Ma97TlmXFvyoJXs";
+
+    public PossibleLocation(String name, Double latitudeMin, Double latitudeMax, Double longitudeMin, Double longitudeMax) {
+        this.name = name;
+        this.latitudeMin = latitudeMin;
+        this.longitudeMin = longitudeMin;
+        this.latitudeMax = latitudeMax;
+        this.longitudeMax = longitudeMax;
+    }
+
+    public PossibleLocation() {}
 
     private Point generateRandomLocation() {
         Point p = new Point();
         Random r = new Random();
-        p.x = Double.valueOf(df.format(xMin + (xMax - xMin) * r.nextDouble()));
-        p.y = Double.valueOf(df.format(yMin + (yMax - yMin) * r.nextDouble()));
+        p.latitude = latitudeMin + (latitudeMax - latitudeMin) * r.nextDouble();
+        p.longitude = longitudeMin + (longitudeMax - longitudeMin) * r.nextDouble();
         return p;
     }
 
     public Point getRandomLocation() throws IOException, ExecutionException, InterruptedException, JSONException {
         Point p;
         boolean isAdressCorrect;
+        String address;
         // check if the generated location is correct
         do {
             p = generateRandomLocation();
-            String address = "https://maps.googleapis.com/maps/api/streetview/metadata?size=600x300&"
-                    + "location=" + p.y + "," + p.x + "&fov=90&heading=235&pitch=10&"
+            address = "https://maps.googleapis.com/maps/api/streetview/metadata?size=600x300&"
+                    + "location=" + p.latitude + "," + p.longitude + "&fov=90&heading=235&pitch=10&"
                     + "key=" + API_KEY;
             JSONObject addressJson = new CheckGeneratedLocation().execute(address).get();
             isAdressCorrect = "OK".equals(addressJson.getString("status"));
+            if(isAdressCorrect) {
+                p.latitude = Double.valueOf(addressJson.getJSONObject("location").getString("lat"));
+                p.longitude = Double.valueOf(addressJson.getJSONObject("location").getString("lng"));
+            }
         } while(!isAdressCorrect);
         return p;
+    }
+
+    public String getName() {
+        return name;
     }
 }
