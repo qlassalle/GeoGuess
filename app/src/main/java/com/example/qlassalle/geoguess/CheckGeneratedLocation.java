@@ -36,7 +36,6 @@ public class CheckGeneratedLocation extends AsyncTask<String, Void, JSONObject> 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // flip the order of equals to handle implicitly null values returned by the method
         return buildJsonObject(sb.toString());
     }
 

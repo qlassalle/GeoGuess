@@ -33,6 +33,11 @@ import com.google.android.gms.maps.model.StreetViewPanoramaLocation;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+
 /**
  * This shows how to create a simple activity with streetview and a map
  */
@@ -47,6 +52,8 @@ public class SplitStreetView extends AppCompatActivity
     private StreetViewPanorama mStreetViewPanorama;
 
     private Marker mMarker;
+
+    private PossibleLocation possibleLocation = new PossibleLocation();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -89,6 +96,18 @@ public class SplitStreetView extends AppCompatActivity
                         .position(markerPosition)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.pegman))
                         .draggable(true));
+
+                map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override
+                    public void onMapClick(LatLng latLng) {
+                        try {
+                            Point p = possibleLocation.getRandomLocation();
+                            changePosition(p);
+                        } catch (IOException | ExecutionException | InterruptedException | JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }
@@ -117,5 +136,10 @@ public class SplitStreetView extends AppCompatActivity
 
     @Override
     public void onMarkerDrag(Marker marker) {
+    }
+
+    private void changePosition(Point p) {
+        LatLng newPosition = new LatLng(p.y, p.x);
+        mStreetViewPanorama.setPosition(newPosition);
     }
 }
