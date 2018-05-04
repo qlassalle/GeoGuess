@@ -56,6 +56,7 @@ public class SplitStreetView extends AppCompatActivity
 
     private Deque<PossibleLocation> possibleLocation;
     private LatLng currentLocation;
+    private Score score = new Score();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -103,24 +104,21 @@ public class SplitStreetView extends AppCompatActivity
             public void onMapReady(GoogleMap map) {
                 map.setOnMarkerDragListener(SplitStreetView.this);
                 // Creates a draggable marker. Long press to drag.
-                mMarker = map.addMarker(new MarkerOptions()
-                        .position(markerPosition)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.pegman))
-                        .draggable(true));
+                mMarker = map.addMarker(new MarkerOptions().position(markerPosition));
 
                 map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(LatLng userLocation) {
                         try {
+                            GameLogic gl = new GameLogic();
+                            Double distance = gl.distance(currentLocation.latitude, userLocation.latitude,
+                                                          currentLocation.longitude, userLocation.longitude);
+                            score.updateScore(distance);
                             if(possibleLocation.isEmpty()) {
                                 System.out.println("\n\n\n fini \n\n\n ");
+                                System.out.println("Votre score est : " + score.getScore());
                                 System.exit(0);
                             } else {
-                                GameLogic gl = new GameLogic();
-                                Double distance = gl.distance(currentLocation.latitude, userLocation.latitude,
-                                            currentLocation.longitude, userLocation.longitude,
-                                            0, 0) / 1000;
-                                System.out.println("\n\n\n Vous êtes à distance " + distance + "km \n\n");
                                 currentLocation = possibleLocation.pop().getRandomLocation();
                                 changePosition(currentLocation);
                             }

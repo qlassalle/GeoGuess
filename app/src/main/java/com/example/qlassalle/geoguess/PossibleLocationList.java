@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class PossibleLocationList {
 
-    private static int NUMBER_OF_LOCATIONS_PER_GAME;
+    private static int NUMBER_OF_LOCATIONS_PER_GAME = 3;
 
     private Map<Level, List<PossibleLocation>> possibleLocations;
 
@@ -35,7 +35,6 @@ public class PossibleLocationList {
             add(new PossibleLocation("Moscou", 55.66, 55.84, 37.43, 37.79));
             add(new PossibleLocation("Abidjan", 5.34, 5.37, -4.02, -3.98));
         }});
-        NUMBER_OF_LOCATIONS_PER_GAME = possibleLocations.get(Level.EASY).size();
     }
 
     public Deque<PossibleLocation> pickRandomLocations(Level level) {
