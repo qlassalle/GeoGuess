@@ -37,6 +37,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.Deque;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -104,7 +105,10 @@ public class SplitStreetView extends AppCompatActivity
             public void onMapReady(GoogleMap map) {
                 map.setOnMarkerDragListener(SplitStreetView.this);
                 // Creates a draggable marker. Long press to drag.
-                mMarker = map.addMarker(new MarkerOptions().position(markerPosition));
+                mMarker = map.addMarker(new MarkerOptions()
+                        .position(markerPosition)
+                        .draggable(true)
+                        .visible(false));
 
                 map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
@@ -117,6 +121,10 @@ public class SplitStreetView extends AppCompatActivity
                             if(possibleLocation.isEmpty()) {
                                 System.out.println("\n\n\n fini \n\n\n ");
                                 System.out.println("Votre score est : " + score.getScore());
+                                // @todo manage level chosen by user
+                                score.setLevel(Level.EASY);
+                                score.save();
+
                                 System.exit(0);
                             } else {
                                 currentLocation = possibleLocation.pop().getRandomLocation();

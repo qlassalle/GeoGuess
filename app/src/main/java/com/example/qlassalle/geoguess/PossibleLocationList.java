@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class PossibleLocationList {
 
-    private static int NUMBER_OF_LOCATIONS_PER_GAME = 3;
+    private static int NUMBER_OF_LOCATIONS_PER_GAME = 1;
 
     private Map<Level, List<PossibleLocation>> possibleLocations;
 
