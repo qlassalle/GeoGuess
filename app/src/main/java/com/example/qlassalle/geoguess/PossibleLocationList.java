@@ -26,7 +26,7 @@ public class PossibleLocationList {
             // latitude min = point bas | max = point haut --> 1er argument dans les coordonnées maps
             // longitude min = point est | max = point ouest --> 2nd argument dans les coordonnées maps
 
-            add(new PossibleLocation("Paris", 48.89, 48.82, 2.30, 2.39));
+            add(new PossibleLocation("Paris", 48.82, 48.89, 2.30, 2.39));
             add(new PossibleLocation("Londres", 51.48, 51.53, -0.14, -0.10));
             add(new PossibleLocation("New York", 40.75, 40.80, -73.98, -73.95));
             add(new PossibleLocation("Shangai", 31.19, 31.25, 121.42, 121.49));
