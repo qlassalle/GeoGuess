@@ -4,22 +4,22 @@ import com.orm.SugarRecord;
 
 public class Score extends SugarRecord<Score> {
 
-    private int score = 0;
+    private int nbPoints = 0;
     private Level level;
 
     public Score() {}
 
-    public Score(int score, Level level) {
-        this.score = score;
+    public Score(int nbPoints, Level level) {
+        this.nbPoints = nbPoints;
         this.level = level;
     }
 
-    public int getScore() {
-        return score;
+    public int getNbPoints() {
+        return nbPoints;
     }
 
-    public void updateScore(Double distance) {
-        score += distance;
+    public void updateScore(int score) {
+        this.nbPoints += score;
     }
 
     public void setLevel(Level level) {
@@ -32,6 +32,6 @@ public class Score extends SugarRecord<Score> {
 
     @Override
     public String toString() {
-        return "Score{" + "score=" + score + ", level=" + level + '}';
+        return "Score{" + "nbPoints=" + nbPoints + ", level=" + level + '}';
     }
 }

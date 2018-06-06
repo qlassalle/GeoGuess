@@ -24,7 +24,6 @@ import com.google.android.gms.maps.StreetViewPanorama;
 import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaChangeListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -37,14 +36,13 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.Deque;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
  * This shows how to create a simple activity with streetview and a map
  */
-public class SplitStreetView extends AppCompatActivity
-        implements OnMarkerDragListener, OnStreetViewPanoramaChangeListener {
+public class SplitStreetView extends AppCompatActivity implements OnMarkerDragListener,
+        OnStreetViewPanoramaChangeListener {
 
     private static final String MARKER_POSITION_KEY = "MarkerPosition";
 
@@ -56,8 +54,10 @@ public class SplitStreetView extends AppCompatActivity
     private Marker mMarker;
 
     private Deque<PossibleLocation> possibleLocation;
-    private LatLng currentLocation;
+    private LatLng generatedLocation;
     private Score score = new Score();
+    private PossibleLocation currentLocation;
+    private GameLogic gl = new GameLogic();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -75,63 +75,60 @@ public class SplitStreetView extends AppCompatActivity
         possibleLocation = possibleLocationList.pickRandomLocations(Level.EASY);
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
-                (SupportStreetViewPanoramaFragment)
-                        getSupportFragmentManager().findFragmentById(R.id.streetviewpanorama);
-        streetViewPanoramaFragment.getStreetViewPanoramaAsync(
-                new OnStreetViewPanoramaReadyCallback() {
-                    @Override
-                    public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
-                        mStreetViewPanorama = panorama;
-                        mStreetViewPanorama.setOnStreetViewPanoramaChangeListener(
-                                SplitStreetView.this);
-                        // Only need to set the position once as the streetview fragment will maintain
-                        // its state.
-                        if (savedInstanceState == null) {
-                            try {
-                                currentLocation = possibleLocation.pop().getRandomLocation();
-                                changePosition(currentLocation);
-                            } catch (IOException | ExecutionException | JSONException
-                                    | InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                (SupportStreetViewPanoramaFragment) getSupportFragmentManager().findFragmentById
+                        (R.id.streetviewpanorama);
+        streetViewPanoramaFragment.getStreetViewPanoramaAsync(new OnStreetViewPanoramaReadyCallback() {
+            @Override
+            public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
+                mStreetViewPanorama = panorama;
+                mStreetViewPanorama.setOnStreetViewPanoramaChangeListener(SplitStreetView.this);
+                // Only need to set the position once as the streetview fragment will maintain
+                // its state.
+                if (savedInstanceState == null) {
+                    try {
+                        currentLocation = possibleLocation.pop();
+                        generatedLocation = currentLocation.getRandomLocation();
+                        changePosition(generatedLocation);
+                    } catch (IOException | ExecutionException | JSONException |
+                            InterruptedException e) {
+                        e.printStackTrace();
                     }
-                });
+                }
+            }
+        });
 
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap map) {
                 map.setOnMarkerDragListener(SplitStreetView.this);
                 // Creates a draggable marker. Long press to drag.
-                mMarker = map.addMarker(new MarkerOptions()
-                        .position(markerPosition)
-                        .draggable(true)
-                        .visible(false));
+                mMarker = map.addMarker(new MarkerOptions().position(markerPosition).draggable
+                        (true).visible(false));
 
                 map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(LatLng userLocation) {
                         try {
-                            GameLogic gl = new GameLogic();
-                            Double distance = gl.distance(currentLocation.latitude, userLocation.latitude,
-                                                          currentLocation.longitude, userLocation.longitude);
-                            score.updateScore(distance);
-                            if(possibleLocation.isEmpty()) {
+                            gl.calculateScore(generatedLocation, userLocation, currentLocation);
+                            if (possibleLocation.isEmpty()) {
                                 System.out.println("\n\n\n fini \n\n\n ");
-                                System.out.println("Votre score est : " + score.getScore());
+                                System.out.println("Votre score final est : " + gl.getScore()
+                                                                            .getNbPoints() /
+                                        PossibleLocationList.NUMBER_OF_LOCATIONS_PER_GAME);
                                 // @todo manage level chosen by user
                                 score.setLevel(Level.EASY);
                                 score.save();
 
                                 System.exit(0);
                             } else {
-                                currentLocation = possibleLocation.pop().getRandomLocation();
-                                changePosition(currentLocation);
+                                currentLocation = possibleLocation.pop();
+                                generatedLocation = currentLocation.getRandomLocation();
+                                changePosition(generatedLocation);
                             }
-                        } catch (IOException | ExecutionException | InterruptedException
-                                | JSONException e) {
+                        } catch (IOException | ExecutionException | InterruptedException |
+                                JSONException e) {
                             e.printStackTrace();
                         }
                     }

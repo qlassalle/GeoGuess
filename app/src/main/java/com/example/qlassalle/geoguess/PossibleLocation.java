@@ -16,16 +16,18 @@ public class PossibleLocation {
     private Double latitudeMax;
     private Double longitudeMin;
     private Double longitudeMax;
+    private int gapUnit;
 
     private static final String API_KEY = "AIzaSyB1iqthMV_WMs54Ljv4Ma97TlmXFvyoJXs";
 
-    public PossibleLocation(String name, Double latitudeMin, Double latitudeMax, Double longitudeMin,
-                            Double longitudeMax) {
+    public PossibleLocation(String name, Double latitudeMin, Double latitudeMax, Double
+            longitudeMin, Double longitudeMax, int gapUnit) {
         this.name = name;
         this.latitudeMin = latitudeMin;
-        this.longitudeMin = longitudeMin;
         this.latitudeMax = latitudeMax;
+        this.longitudeMin = longitudeMin;
         this.longitudeMax = longitudeMax;
+        this.gapUnit = gapUnit;
     }
 
     private Point generateRandomLocation() {
@@ -36,27 +38,33 @@ public class PossibleLocation {
         return p;
     }
 
-    public LatLng getRandomLocation() throws IOException, ExecutionException, InterruptedException, JSONException {
+    public LatLng getRandomLocation() throws IOException, ExecutionException,
+            InterruptedException, JSONException {
         Point p;
         boolean isAdressCorrect;
         String address;
         // check if the generated location is correct
         do {
             p = generateRandomLocation();
-            address = "https://maps.googleapis.com/maps/api/streetview/metadata?size=600x300&"
-                    + "location=" + p.latitude + "," + p.longitude + "&fov=90&heading=235&pitch=10&"
-                    + "key=" + API_KEY;
+            address = "https://maps.googleapis.com/maps/api/streetview/metadata?size=600x300&" +
+                    "location=" + p.latitude + "," + p.longitude +
+                    "&fov=90&heading=235&pitch=10&" + "key=" + API_KEY;
             JSONObject addressJson = new CheckGeneratedLocation().execute(address).get();
             isAdressCorrect = "OK".equals(addressJson.getString("status"));
-            if(isAdressCorrect) {
+            if (isAdressCorrect) {
                 p.latitude = Double.valueOf(addressJson.getJSONObject("location").getString("lat"));
-                p.longitude = Double.valueOf(addressJson.getJSONObject("location").getString("lng"));
+                p.longitude = Double.valueOf(addressJson.getJSONObject("location").getString
+                        ("lng"));
             }
-        } while(!isAdressCorrect);
+        } while (!isAdressCorrect);
         return new LatLng(p.latitude, p.longitude);
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getGapUnit() {
+        return gapUnit;
     }
 }

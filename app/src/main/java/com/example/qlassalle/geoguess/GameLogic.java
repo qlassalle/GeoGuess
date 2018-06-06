@@ -1,6 +1,14 @@
 package com.example.qlassalle.geoguess;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class GameLogic {
+
+    private Score score;
+
+    public GameLogic() {
+        this.score = new Score();
+    }
 
     /**
      * Methods retrieved from Stackoverflow.com
@@ -30,5 +38,33 @@ public class GameLogic {
         distance = Math.pow(distance, 2);
 
         return Math.sqrt(distance) / 1000;
+    }
+
+    public void calculateScore(LatLng generatedLocation, LatLng userLocation, PossibleLocation
+            currentLocation) {
+        Double distance = distance(generatedLocation.latitude, userLocation.latitude,
+                                   generatedLocation.longitude, userLocation.longitude);
+        System.out.println("---------------------------------------");
+        System.out.println("---------------------------------------");
+        System.out.println("---------------------------------------");
+        System.out.println("\n\n\n In game logic \n\n\n");
+        System.out.println("distance : " + distance);
+        System.out.println("unit gap : " + currentLocation.getGapUnit());
+        int ecart = (int) (distance / currentLocation.getGapUnit());
+        System.out.println("ecart calculé : " + ecart);
+        short calculatedScore = (short) (100 - ecart);
+        if(calculatedScore < 0 ) {
+            calculatedScore = 0;
+        }
+        score.updateScore(calculatedScore);
+        System.out.println("Le score pour " + currentLocation.getName() + " " + "est " +
+                                   calculatedScore);
+        System.out.println("---------------------------------------");
+        System.out.println("---------------------------------------");
+        System.out.println("---------------------------------------");
+    }
+
+    public Score getScore() {
+        return score;
     }
 }
