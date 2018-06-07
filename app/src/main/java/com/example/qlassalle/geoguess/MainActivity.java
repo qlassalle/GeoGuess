@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.json.JSONObject;
 
@@ -29,8 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void showBestScores() {
         GameLogic gl = new GameLogic();
-        List<Score> scores = Score.listAll(Score.class);
         Map<Level, Integer> bestScores = gl.getBestScores();
+        TextView recordEasy = findViewById(R.id.scoreEasy);
+        recordEasy.setText(String.valueOf(bestScores.get(Level.EASY)));
+        TextView recordMedium = findViewById(R.id.scoreMedium);
+        recordMedium.setText(String.valueOf(bestScores.get(Level.MEDIUM)));
+        TextView recordHard = findViewById(R.id.scoreHard);
+        recordHard.setText(String.valueOf(bestScores.get(Level.HARD)));
     }
 
     public void startGameButton(View view) {

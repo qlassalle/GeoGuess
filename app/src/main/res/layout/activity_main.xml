@@ -15,16 +15,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="GeoGuess"
-            android:layout_marginBottom="30dp"
-            android:textSize="120px"
+            android:layout_marginBottom="20dp"
+            android:textSize="50dp"
             android:textAlignment="center"/>
 
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choisissez votre niveau de difficulté"
+            android:textSize="14dp"
+            android:textAlignment="center"/>
 
         <Spinner
             android:id="@+id/difficultyLevel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="5dp"/>
 
         <Button
             android:id="@+id/button"
