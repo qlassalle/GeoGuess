@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         // pass level to SplitStreetView
         Level selectedLevel = Level.valueOf(spinner.getSelectedItem().toString());
         Intent intent = new Intent(this, SplitStreetView.class);
+        intent.putExtra("level", selectedLevel);
         startActivity(intent);
     }
 

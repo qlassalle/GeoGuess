@@ -37,6 +37,29 @@ public class PossibleLocationList {
             add(new PossibleLocation("Moscou", 55.66, 55.84, 37.43, 37.79, 30));
             add(new PossibleLocation("Abidjan", 5.34, 5.37, -4.02, -3.98, 30));
         }});
+
+        possibleLocations.put(Level.MEDIUM, new ArrayList<PossibleLocation>() {{
+            add(new PossibleLocation("Barcelone", 41.38, 41.42, 2.20, 2.14, 5));
+            add(new PossibleLocation("Turin", 45.01, 45.12, 7.70, 7.57, 5));
+            add(new PossibleLocation("Berlin", 52.49, 52.52, 13.44, 13.37, 5));
+            add(new PossibleLocation("Singapour", 1.28, 1.45, 103.96, 103.78, 10));
+            add(new PossibleLocation("Sydney", -33.87, -33.86, 151.21, 151.20, 10));
+            add(new PossibleLocation("Miami", 25.75, 25.78, -80.18, -80.22, 15));
+            add(new PossibleLocation("Lisbonne", 38.70, 38.73, -9.11, -9.17, 5));
+            add(new PossibleLocation("Cophenague", 55.66, 55.68, 12.58, 12.56, 10));
+        }});
+
+        possibleLocations.put(Level.HARD, new ArrayList<PossibleLocation>() {{
+            add(new PossibleLocation("Angers", 47.46, 47.47, -0.54, -0.56, 3));
+            add(new PossibleLocation("Naples", 40.85, 40.86, 14.27, 14.26, 5));
+            add(new PossibleLocation("Atlanta", 33.74, 33.76, -84.37, -84.39, 10));
+            add(new PossibleLocation("Mexico", 19.39, 19.46, -99.09, -99.17, 10));
+            add(new PossibleLocation("Iatoustk, Sibérie", 61.97, 62.05, 129.74, 129.62,
+                                     30));
+            add(new PossibleLocation("Riga", 56.95, 56.96, 24.12, 24.10, 15));
+            add(new PossibleLocation("Yaoundé", 3.85, 3.88, 11.53, 11.50, 15));
+            add(new PossibleLocation("Buenos Aires", -34.60, -34.59, -56.36, -56.38, 10));
+        }});
     }
 
     public Deque<PossibleLocation> pickRandomLocations(Level level) {

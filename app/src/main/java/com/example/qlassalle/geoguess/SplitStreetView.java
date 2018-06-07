@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.StreetViewPanoramaLocation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -72,7 +73,9 @@ public class SplitStreetView extends AppCompatActivity implements OnMarkerDragLi
         }
 
         final PossibleLocationList possibleLocationList = new PossibleLocationList();
-        possibleLocation = possibleLocationList.pickRandomLocations(Level.EASY);
+        Intent intent = getIntent();
+        Level level = (Level) intent.getSerializableExtra("level");
+        possibleLocation = possibleLocationList.pickRandomLocations(level);
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment) getSupportFragmentManager().findFragmentById
