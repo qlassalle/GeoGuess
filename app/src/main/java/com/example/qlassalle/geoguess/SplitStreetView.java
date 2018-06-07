@@ -59,6 +59,7 @@ public class SplitStreetView extends AppCompatActivity implements OnMarkerDragLi
     private Score score = new Score();
     private PossibleLocation currentLocation;
     private GameLogic gl = new GameLogic();
+    private Level currentGameLevel;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -74,8 +75,8 @@ public class SplitStreetView extends AppCompatActivity implements OnMarkerDragLi
 
         final PossibleLocationList possibleLocationList = new PossibleLocationList();
         Intent intent = getIntent();
-        Level level = (Level) intent.getSerializableExtra("level");
-        possibleLocation = possibleLocationList.pickRandomLocations(level);
+        currentGameLevel = (Level) intent.getSerializableExtra("level");
+        possibleLocation = possibleLocationList.pickRandomLocations(currentGameLevel);
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment) getSupportFragmentManager().findFragmentById
@@ -114,15 +115,14 @@ public class SplitStreetView extends AppCompatActivity implements OnMarkerDragLi
                     @Override
                     public void onMapClick(LatLng userLocation) {
                         try {
-                            gl.calculateScore(generatedLocation, userLocation, currentLocation);
+                            gl.calculateScore(generatedLocation, userLocation,
+                                                   currentLocation);
                             if (possibleLocation.isEmpty()) {
                                 System.out.println("\n\n\n fini \n\n\n ");
                                 System.out.println("Votre score final est : " + gl.getScore()
                                                                             .getNbPoints() /
                                         PossibleLocationList.NUMBER_OF_LOCATIONS_PER_GAME);
-                                // @todo manage level chosen by user
-                                score.setLevel(Level.EASY);
-                                score.save();
+                                gl.saveScore(currentGameLevel);
 
                                 System.exit(0);
                             } else {

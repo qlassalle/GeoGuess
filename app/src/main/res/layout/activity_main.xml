@@ -11,23 +11,108 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="GeoGuess" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GeoGuess"
+            android:layout_marginBottom="30dp"
+            android:textSize="120px"
+            android:textAlignment="center"/>
 
 
-    <Spinner
-        android:id="@+id/difficultyLevel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/difficultyLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"/>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Start game"
-        android:onClick="startGameButton"/>
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start game"
+            android:onClick="startGameButton"
+            android:layout_marginTop="50dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Meilleurs scores"
+            android:layout_marginTop="30dp"
+            android:textSize="18dp"
+            android:textAlignment="center"/>
+
+        <GridLayout
+            android:id="@+id/grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Facile"
+                android:layout_marginTop="30dp"
+                android:textSize="18dp"
+                android:textAlignment="center"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"/>
+
+            <TextView
+                android:id="@+id/scoreEasy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="30dp"
+                android:textSize="18dp"
+                android:textAlignment="center"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Moyen"
+                android:layout_marginTop="30dp"
+                android:textSize="18dp"
+                android:textAlignment="center"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"/>
+
+            <TextView
+                android:id="@+id/scoreMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="30dp"
+                android:textSize="18dp"
+                android:textAlignment="center"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Difficile"
+                android:layout_marginTop="30dp"
+                android:textSize="18dp"
+                android:textAlignment="center"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"/>
+
+            <TextView
+                android:id="@+id/scoreHard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="30dp"
+                android:textSize="18dp"
+                android:textAlignment="center"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"/>
+
+        </GridLayout>
 
     </LinearLayout>
 

@@ -10,6 +10,9 @@ import android.widget.Spinner;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +24,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         populateSpinner();
+        showBestScores();
+    }
+
+    private void showBestScores() {
+        GameLogic gl = new GameLogic();
+        List<Score> scores = Score.listAll(Score.class);
+        Map<Level, Integer> bestScores = gl.getBestScores();
     }
 
     public void startGameButton(View view) {

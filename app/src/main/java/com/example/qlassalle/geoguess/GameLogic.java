@@ -2,6 +2,11 @@ package com.example.qlassalle.geoguess;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class GameLogic {
 
     private Score score;
@@ -62,9 +67,42 @@ public class GameLogic {
         System.out.println("---------------------------------------");
         System.out.println("---------------------------------------");
         System.out.println("---------------------------------------");
+
     }
 
     public Score getScore() {
         return score;
+    }
+
+    public void saveScore(Level currentGameLevel) {
+        score.setLevel(currentGameLevel);
+        score.setNbPoints();
+        score.save();
+    }
+
+    public Map<Level, Integer> getBestScores() {
+        int nbLevels = Level.values().length;
+        Map<Level, Integer> bestScores = initializeMap(nbLevels);
+        List<Score> allScores = Score.findWithQuery(Score.class, "select nb_points, level " +
+                "from Score");
+        if(allScores.isEmpty()) {
+            // return an empty map rather than null to avoid to do null check when calling this
+            // method
+            return Collections.emptyMap();
+        }
+        for (Score currentScore : allScores) {
+            if(bestScores.get(currentScore.getLevel()) < currentScore.getNbPoints()) {
+                bestScores.put(currentScore.getLevel(), currentScore.getNbPoints());
+            }
+        }
+        return bestScores;
+    }
+
+    private Map<Level, Integer> initializeMap(int nbLevels) {
+        Map<Level, Integer> bestScores = new HashMap<>();
+        for (int i = 0; i < nbLevels; i++) {
+            bestScores.put(Level.values()[i], 0);
+        }
+        return bestScores;
     }
 }

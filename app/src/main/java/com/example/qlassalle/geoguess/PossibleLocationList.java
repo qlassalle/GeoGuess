@@ -28,9 +28,9 @@ public class PossibleLocationList {
             // longitude min = point est | max = point ouest --> 2nd argument dans les
             // coordonnées maps
 
-            add(new PossibleLocation("Paris", 48.82, 48.89, 2.30, 2.39, 1));
-            add(new PossibleLocation("Londres", 51.48, 51.53, -0.14, -0.10, 1));
-            add(new PossibleLocation("New York", 40.75, 40.80, -73.98, -73.95, 1));
+            add(new PossibleLocation("Paris", 48.82, 48.89, 2.30, 2.39, 3));
+            add(new PossibleLocation("Londres", 51.48, 51.53, -0.14, -0.10, 3));
+            add(new PossibleLocation("New York", 40.75, 40.80, -73.98, -73.95, 3));
             add(new PossibleLocation("Shangai", 31.19, 31.25, 121.42, 121.49, 30));
             add(new PossibleLocation("Pekin", 39.87, 39.96, 116.30, 116.46, 30));
             add(new PossibleLocation("Rio de Janeiro", -22.95, -22.95, -43.21, -43.20, 10));
@@ -39,13 +39,13 @@ public class PossibleLocationList {
         }});
 
         possibleLocations.put(Level.MEDIUM, new ArrayList<PossibleLocation>() {{
-            add(new PossibleLocation("Barcelone", 41.38, 41.42, 2.20, 2.14, 5));
-            add(new PossibleLocation("Turin", 45.01, 45.12, 7.70, 7.57, 5));
-            add(new PossibleLocation("Berlin", 52.49, 52.52, 13.44, 13.37, 5));
+            add(new PossibleLocation("Barcelone", 41.38, 41.42, 2.20, 2.14, 10));
+            add(new PossibleLocation("Turin", 45.01, 45.12, 7.70, 7.57, 10));
+            add(new PossibleLocation("Berlin", 52.49, 52.52, 13.44, 13.37, 10));
             add(new PossibleLocation("Singapour", 1.28, 1.45, 103.96, 103.78, 10));
             add(new PossibleLocation("Sydney", -33.87, -33.86, 151.21, 151.20, 10));
             add(new PossibleLocation("Miami", 25.75, 25.78, -80.18, -80.22, 15));
-            add(new PossibleLocation("Lisbonne", 38.70, 38.73, -9.11, -9.17, 5));
+            add(new PossibleLocation("Lisbonne", 38.70, 38.73, -9.11, -9.17, 10));
             add(new PossibleLocation("Cophenague", 55.66, 55.68, 12.58, 12.56, 10));
         }});
 

@@ -13,7 +13,7 @@
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB1iqthMV_WMs54Ljv4Ma97TlmXFvyoJXs"/>
         <meta-data android:name="DATABASE" android:value="geoguess.db" />
-        <meta-data android:name="VERSION" android:value="2" />
+        <meta-data android:name="VERSION" android:value="9" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.example" />
         <activity android:name=".MainActivity">
