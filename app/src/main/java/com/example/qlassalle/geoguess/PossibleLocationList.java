@@ -34,8 +34,8 @@ public class PossibleLocationList {
             add(new PossibleLocation("Shangai", 31.19, 31.25, 121.42, 121.49, 30));
             add(new PossibleLocation("Pekin", 39.87, 39.96, 116.30, 116.46, 30));
             add(new PossibleLocation("Rio de Janeiro", -22.95, -22.95, -43.21, -43.20, 10));
-            add(new PossibleLocation("Moscou", 55.66, 55.84, 37.43, 37.79, 50));
-            add(new PossibleLocation("Abidjan", 5.34, 5.37, -4.02, -3.98, 50));
+            add(new PossibleLocation("Moscou", 55.66, 55.84, 37.43, 37.79, 30));
+            add(new PossibleLocation("Abidjan", 5.34, 5.37, -4.02, -3.98, 30));
         }});
     }
 
