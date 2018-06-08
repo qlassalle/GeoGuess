@@ -85,11 +85,6 @@ public class GameLogic {
         Map<Level, Integer> bestScores = initializeMap(nbLevels);
         List<Score> allScores = Score.findWithQuery(Score.class, "select nb_points, level " +
                 "from Score");
-        if(allScores.isEmpty()) {
-            // return an empty map rather than null to avoid to do null check when calling this
-            // method
-            return Collections.emptyMap();
-        }
         for (Score currentScore : allScores) {
             if(bestScores.get(currentScore.getLevel()) < currentScore.getNbPoints()) {
                 bestScores.put(currentScore.getLevel(), currentScore.getNbPoints());

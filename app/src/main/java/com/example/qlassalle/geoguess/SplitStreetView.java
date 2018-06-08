@@ -56,7 +56,6 @@ public class SplitStreetView extends AppCompatActivity implements OnMarkerDragLi
 
     private Deque<PossibleLocation> possibleLocation;
     private LatLng generatedLocation;
-    private Score score = new Score();
     private PossibleLocation currentLocation;
     private GameLogic gl = new GameLogic();
     private Level currentGameLevel;
@@ -104,6 +103,10 @@ public class SplitStreetView extends AppCompatActivity implements OnMarkerDragLi
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
+            /**
+             *
+             * @param map
+             */
             @Override
             public void onMapReady(GoogleMap map) {
                 map.setOnMarkerDragListener(SplitStreetView.this);
@@ -118,13 +121,9 @@ public class SplitStreetView extends AppCompatActivity implements OnMarkerDragLi
                             gl.calculateScore(generatedLocation, userLocation,
                                                    currentLocation);
                             if (possibleLocation.isEmpty()) {
-                                System.out.println("\n\n\n fini \n\n\n ");
-                                System.out.println("Votre score final est : " + gl.getScore()
-                                                                            .getNbPoints() /
-                                        PossibleLocationList.NUMBER_OF_LOCATIONS_PER_GAME);
                                 gl.saveScore(currentGameLevel);
-
-                                System.exit(0);
+                                backToMain();
+                                // go back to main activity
                             } else {
                                 currentLocation = possibleLocation.pop();
                                 generatedLocation = currentLocation.getRandomLocation();
@@ -138,6 +137,12 @@ public class SplitStreetView extends AppCompatActivity implements OnMarkerDragLi
                 });
             }
         });
+    }
+
+    private void backToMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void changePosition(LatLng newPosition) {

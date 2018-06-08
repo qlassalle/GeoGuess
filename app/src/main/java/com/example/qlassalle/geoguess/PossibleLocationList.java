@@ -39,14 +39,14 @@ public class PossibleLocationList {
         }});
 
         possibleLocations.put(Level.MEDIUM, new ArrayList<PossibleLocation>() {{
-            add(new PossibleLocation("Barcelone", 41.38, 41.42, 2.20, 2.14, 10));
-            add(new PossibleLocation("Turin", 45.01, 45.12, 7.70, 7.57, 10));
-            add(new PossibleLocation("Berlin", 52.49, 52.52, 13.44, 13.37, 10));
-            add(new PossibleLocation("Singapour", 1.28, 1.45, 103.96, 103.78, 10));
-            add(new PossibleLocation("Sydney", -33.87, -33.86, 151.21, 151.20, 10));
-            add(new PossibleLocation("Miami", 25.75, 25.78, -80.18, -80.22, 15));
-            add(new PossibleLocation("Lisbonne", 38.70, 38.73, -9.11, -9.17, 10));
-            add(new PossibleLocation("Cophenague", 55.66, 55.68, 12.58, 12.56, 10));
+            add(new PossibleLocation("Barcelone", 41.38, 41.42, 2.20, 2.14, 20));
+            add(new PossibleLocation("Turin", 45.01, 45.12, 7.70, 7.57, 20));
+            add(new PossibleLocation("Berlin", 52.49, 52.52, 13.44, 13.37, 20));
+            add(new PossibleLocation("Singapour", 1.28, 1.45, 103.96, 103.78, 20));
+            add(new PossibleLocation("Sydney", -33.87, -33.86, 151.21, 151.20, 20));
+            add(new PossibleLocation("Miami", 25.75, 25.78, -80.18, -80.22, 25));
+            add(new PossibleLocation("Lisbonne", 38.70, 38.73, -9.11, -9.17, 20));
+            add(new PossibleLocation("Cophenague", 55.66, 55.68, 12.58, 12.56, 20));
         }});
 
         possibleLocations.put(Level.HARD, new ArrayList<PossibleLocation>() {{
