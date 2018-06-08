@@ -128,28 +128,7 @@ public class SplitStreetView extends AppCompatActivity implements OnMarkerDragLi
                             if (possibleLocation.isEmpty()) {
                                 gl.saveScore(currentGameLevel);
 
-                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder
-                                        (context);
-
-                                // set title
-                                alertDialogBuilder.setTitle("Fécilitations");
-
-                                // set dialog message
-                                alertDialogBuilder.setMessage("Vous avez réalisé un score de " +
-                                          gl.getScore().getNbPoints() + " ! Retourner à l'accueil " +
-                                          "pour voir si c'est votre meilleur score !")
-                                                  .setCancelable(false)
-                                                  .setPositiveButton("Retourner à l'accueil", (dialog, id) -> {
-                                    // if this button is clicked, close
-                                    // current activity
-                                    backToMain();
-                                });
-
-                                // create alert dialog
-                                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                                // show it
-                                alertDialog.show();
+                                announceScore(context);
                             } else {
                                 currentLocation = possibleLocation.pop();
                                 generatedLocation = currentLocation.getRandomLocation();
@@ -163,6 +142,35 @@ public class SplitStreetView extends AppCompatActivity implements OnMarkerDragLi
                 });
             }
         });
+    }
+
+    /**
+     * Creates a dialog box to greet user for his score and offers him to go back to the menu
+     * @param context The current context
+     */
+    private void announceScore(Context context) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder
+                (context);
+
+        // set title
+        alertDialogBuilder.setTitle("Fécilitations");
+
+        // set dialog message
+        alertDialogBuilder.setMessage("Vous avez réalisé un score de " +
+                  gl.getScore().getNbPoints() + " ! Retourner à l'accueil " +
+                  "pour voir si c'est votre meilleur score !")
+                          .setCancelable(false)
+                          .setPositiveButton("Retourner à l'accueil", (dialog, id) -> {
+            // if this button is clicked, close
+            // current activity
+            backToMain();
+        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 
     private void backToMain() {

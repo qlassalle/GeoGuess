@@ -59,25 +59,12 @@ public class GameLogic {
             currentLocation) {
         Double distance = distance(generatedLocation.latitude, userLocation.latitude,
                                    generatedLocation.longitude, userLocation.longitude);
-        System.out.println("---------------------------------------");
-        System.out.println("---------------------------------------");
-        System.out.println("---------------------------------------");
-        System.out.println("\n\n\n In game logic \n\n\n");
-        System.out.println("distance : " + distance);
-        System.out.println("unit gap : " + currentLocation.getGapUnit());
-        int ecart = (int) (distance / currentLocation.getGapUnit());
-        System.out.println("ecart calculé : " + ecart);
-        short calculatedScore = (short) (100 - ecart);
+        int gap = (int) (distance / currentLocation.getGapUnit());
+        short calculatedScore = (short) (100 - gap);
         if(calculatedScore < 0 ) {
             calculatedScore = 0;
         }
         score.updateScore(calculatedScore);
-        System.out.println("Le score pour " + currentLocation.getName() + " " + "est " +
-                                   calculatedScore);
-        System.out.println("---------------------------------------");
-        System.out.println("---------------------------------------");
-        System.out.println("---------------------------------------");
-
     }
 
     /**
@@ -97,6 +84,9 @@ public class GameLogic {
     public Map<Level, Integer> getBestScores() {
         int nbLevels = Level.values().length;
         Map<Level, Integer> bestScores = initializeMap(nbLevels);
+        // I wanted to do a query with max(nb_points) but didn't manage to success. I sticked
+        // with findWithQuery because I saw this slight mistake at the end and didn't have the
+        // time to fix it
         List<Score> allScores = Score.findWithQuery(Score.class, "select nb_points, level " +
                 "from Score");
         for (Score currentScore : allScores) {
