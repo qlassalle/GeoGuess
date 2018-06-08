@@ -22,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
         showBestScores();
     }
 
+    /**
+     * Get the best scores and populate the different text edits of the view with the data
+     * retrieved from our database
+     */
     private void showBestScores() {
         GameLogic gl = new GameLogic();
         Map<Level, Integer> bestScores = gl.getBestScores();
@@ -33,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         recordHard.setText(String.valueOf(bestScores.get(Level.HARD)));
     }
 
+    /**
+     * Start the game when associated button is clicked
+     * @param view The current View
+     */
     public void startGameButton(View view) {
         // pass level and number of cities to SplitStreetView
         Level selectedLevel = Level.valueOf(spinnerLevel.getSelectedItem().toString());
@@ -42,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Populate our spinners. Level spinner is filled with the Level enum while the number of
+     * city for the round is filled within the range 1 and the number of possible locations stored
+     */
     private void populateSpinners() {
         spinnerLevel = findViewById(R.id.difficultyLevel);
         String[] levels = Level.getNames();

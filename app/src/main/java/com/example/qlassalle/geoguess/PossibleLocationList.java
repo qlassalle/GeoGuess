@@ -20,6 +20,10 @@ public class PossibleLocationList {
         initMap();
     }
 
+    /**
+     * Initialize the map containing all the possible locations of our app. Design chosen is
+     * explained in the pdf provided with the app.
+     */
     private void initMap() {
         possibleLocations = new EnumMap<>(Level.class);
         possibleLocations.put(Level.EASY, new ArrayList<PossibleLocation>() {{
@@ -62,24 +66,37 @@ public class PossibleLocationList {
         }});
     }
 
+    /**
+     * Pick random locations in one of the list provided above. List is chosen regarding the
+     * level provided by the user.
+     * @param level The level in which the locations must be stored
+     * @return A random list of locations
+     */
     public Deque<PossibleLocation> pickRandomLocations(Level level) {
         // retrieve list corresponding to the level
         List<PossibleLocation> locationList = possibleLocations.get(level);
-        // we declare a set to not have to check whether an element is already there or not
+        // we declare a set to avoid checking whether an element is already there or not
         Set<PossibleLocation> locationSet = new HashSet<>(NUMBER_OF_LOCATIONS_PER_GAME);
         Random random = new Random();
         while (locationSet.size() != NUMBER_OF_LOCATIONS_PER_GAME) {
             locationSet.add(locationList.get(random.nextInt(locationList.size())));
         }
 
-        // We use a Deque as a stack because it's easier to use here. We simply generate a bunch
-        // of possible locations, push them onto the stack and then pop them one by one after the
-        // user click somewhere on the map
+        // We use a Deque as a stack because it's easier to use here and it is exactly
+        // designed for what we want to achieve. We simply generate a bunch of possible
+        // locations, push them onto the stack and then pop them one by one after the
+        // user clicks somewhere on the map
         Deque<PossibleLocation> chosenLocations = new ArrayDeque<>();
         chosenLocations.addAll(locationSet);
         return chosenLocations;
     }
 
+    /**
+     * Returns the number of locations available in a list. As we are always returning the size
+     * of the easy list, list must be updated together to always have the same amount of possible
+     * locations.
+     * @return number of possible locations in the easy list
+     */
     public int numberOfPossibleLocations() {
         return possibleLocations.get(Level.EASY).size();
     }

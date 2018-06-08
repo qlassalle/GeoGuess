@@ -29,8 +29,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.StreetViewPanoramaLocation;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import org.json.JSONException;
@@ -64,6 +67,8 @@ public class SplitStreetView extends AppCompatActivity implements OnMarkerDragLi
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.split_street_view);
+
+        Context context = this;
 
         final LatLng markerPosition;
         if (savedInstanceState == null) {
@@ -119,12 +124,32 @@ public class SplitStreetView extends AppCompatActivity implements OnMarkerDragLi
                     @Override
                     public void onMapClick(LatLng userLocation) {
                         try {
-                            gl.calculateScore(generatedLocation, userLocation,
-                                                   currentLocation);
+                            gl.calculateScore(generatedLocation, userLocation, currentLocation);
                             if (possibleLocation.isEmpty()) {
                                 gl.saveScore(currentGameLevel);
-                                backToMain();
-                                // go back to main activity
+
+                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder
+                                        (context);
+
+                                // set title
+                                alertDialogBuilder.setTitle("Fécilitations");
+
+                                // set dialog message
+                                alertDialogBuilder.setMessage("Vous avez réalisé un score de " +
+                                          gl.getScore().getNbPoints() + " ! Retourner à l'accueil " +
+                                          "pour voir si c'est votre meilleur score !")
+                                                  .setCancelable(false)
+                                                  .setPositiveButton("Retourner à l'accueil", (dialog, id) -> {
+                                    // if this button is clicked, close
+                                    // current activity
+                                    backToMain();
+                                });
+
+                                // create alert dialog
+                                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                                // show it
+                                alertDialog.show();
                             } else {
                                 currentLocation = possibleLocation.pop();
                                 generatedLocation = currentLocation.getRandomLocation();

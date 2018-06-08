@@ -2,11 +2,12 @@ package com.example.qlassalle.geoguess;
 
 import com.orm.SugarRecord;
 
+/**
+ * Entity class. Contains the score and a level associated with it
+ */
 public class Score extends SugarRecord<Score> {
 
     private int nbPoints = 0;
-    // Started with an enum here but I couldn't save the enum with Sugar ORM so I have to change
-    // for a String. Not a nice thing but I was short on time and didn't manage to find another way
     private Level level;
 
     public Score() {}
@@ -32,12 +33,18 @@ public class Score extends SugarRecord<Score> {
         return level;
     }
 
+
+    /**
+     * Compute the final score. Divide the sum of the different results by the number of location
+     * to obtain a level of accuracy for the round
+     */
+    public void setNbPoints() {
+        this.nbPoints /= PossibleLocationList.NUMBER_OF_LOCATIONS_PER_GAME;
+    }
+
+
     @Override
     public String toString() {
         return "Score{" + "nbPoints=" + nbPoints + ", level=" + level + '}';
-    }
-
-    public void setNbPoints() {
-        this.nbPoints /= PossibleLocationList.NUMBER_OF_LOCATIONS_PER_GAME;
     }
 }

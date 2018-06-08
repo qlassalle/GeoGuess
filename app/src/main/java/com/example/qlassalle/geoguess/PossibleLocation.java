@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Method in charge of the random point generation
+ */
 public class PossibleLocation {
 
     private String name;
@@ -30,6 +33,10 @@ public class PossibleLocation {
         this.gapUnit = gapUnit;
     }
 
+    /**
+     * Generate a random location within the boundaries for this PossibleLocation
+     * @return
+     */
     private Point generateRandomLocation() {
         Point p = new Point();
         Random r = new Random();
@@ -38,6 +45,16 @@ public class PossibleLocation {
         return p;
     }
 
+    /**
+     * Checks if the random point generated before provides a location available in street view.
+     * If not, the method keeps generating random points until finding a correct point for street
+     * view
+     * @return A LatLng object representing the location of the generated point
+     * @throws IOException
+     * @throws ExecutionException
+     * @throws InterruptedException
+     * @throws JSONException
+     */
     public LatLng getRandomLocation() throws IOException, ExecutionException,
             InterruptedException, JSONException {
         Point p;

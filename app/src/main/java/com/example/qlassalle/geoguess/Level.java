@@ -1,7 +1,8 @@
 package com.example.qlassalle.geoguess;
 
-import java.util.Arrays;
-
+/**
+ * Enum containing all the levels of difficulty provided in the app
+ */
 public enum Level {
 
     EASY("EASY"),
@@ -18,6 +19,10 @@ public enum Level {
         return nom;
     }
 
+    /**
+     * Creates a String array containing all the names of our enumeration
+     * @return a String array with the names of our enumeration
+     */
     public static String[] getNames() {
         Level[] levels = values();
         String[] names = new String[levels.length];
