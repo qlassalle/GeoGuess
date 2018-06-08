@@ -75,6 +75,7 @@ public class SplitStreetView extends AppCompatActivity implements OnMarkerDragLi
         final PossibleLocationList possibleLocationList = new PossibleLocationList();
         Intent intent = getIntent();
         currentGameLevel = (Level) intent.getSerializableExtra("level");
+        PossibleLocationList.NUMBER_OF_LOCATIONS_PER_GAME = intent.getIntExtra("nbCity", 1);
         possibleLocation = possibleLocationList.pickRandomLocations(currentGameLevel);
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =

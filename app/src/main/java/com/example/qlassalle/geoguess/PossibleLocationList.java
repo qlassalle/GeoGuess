@@ -71,10 +71,16 @@ public class PossibleLocationList {
         while (locationSet.size() != NUMBER_OF_LOCATIONS_PER_GAME) {
             locationSet.add(locationList.get(random.nextInt(locationList.size())));
         }
+
         // We use a Deque as a stack because it's easier to use here. We simply generate a bunch
-        // of possible locations, push them onto the stack and then pop them
+        // of possible locations, push them onto the stack and then pop them one by one after the
+        // user click somewhere on the map
         Deque<PossibleLocation> chosenLocations = new ArrayDeque<>();
         chosenLocations.addAll(locationSet);
         return chosenLocations;
+    }
+
+    public int numberOfPossibleLocations() {
+        return possibleLocations.get(Level.EASY).size();
     }
 }

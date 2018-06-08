@@ -20,18 +20,50 @@
             android:textAlignment="center"/>
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Choisissez votre niveau de difficulté"
-            android:textSize="14dp"
-            android:textAlignment="center"/>
 
-        <Spinner
-            android:id="@+id/difficultyLevel"
+
+        <GridLayout
+            android:id="@+id/layoutNbCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"/>
+            android:columnCount="2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choisissez votre niveau de difficulté"
+                android:textSize="10sp"
+                android:textAlignment="center"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"/>
+
+            <Spinner
+                android:id="@+id/difficultyLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choisissez le nombre de villes pour la partie"
+                android:layout_marginTop="30dp"
+                android:textSize="10sp"
+                android:textAlignment="center"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"/>
+
+            <Spinner
+                android:id="@+id/nbCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"/>
+
+        </GridLayout>
 
         <Button
             android:id="@+id/button"
@@ -46,7 +78,7 @@
             android:layout_height="wrap_content"
             android:text="Meilleurs scores"
             android:layout_marginTop="30dp"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textAlignment="center"/>
 
         <GridLayout
@@ -61,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="Facile"
                 android:layout_marginTop="30dp"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textAlignment="center"
                 android:layout_gravity="fill"
                 android:layout_columnWeight="1"/>
@@ -72,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:layout_marginTop="30dp"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textAlignment="center"
                 android:layout_gravity="fill"
                 android:layout_columnWeight="1"/>
@@ -82,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:text="Moyen"
                 android:layout_marginTop="30dp"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textAlignment="center"
                 android:layout_gravity="fill"
                 android:layout_columnWeight="1"/>
@@ -93,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:layout_marginTop="30dp"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textAlignment="center"
                 android:layout_gravity="fill"
                 android:layout_columnWeight="1"/>
@@ -103,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:text="Difficile"
                 android:layout_marginTop="30dp"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textAlignment="center"
                 android:layout_gravity="fill"
                 android:layout_columnWeight="1"/>
@@ -114,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:layout_marginTop="30dp"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textAlignment="center"
                 android:layout_gravity="fill"
                 android:layout_columnWeight="1"/>

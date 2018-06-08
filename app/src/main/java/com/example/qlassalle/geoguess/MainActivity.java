@@ -8,23 +8,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Spinner spinner;
+    private Spinner spinnerLevel, spinnerNbCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        populateSpinner();
+        populateSpinners();
         showBestScores();
     }
 
@@ -40,19 +34,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startGameButton(View view) {
-        // pass level to SplitStreetView
-        Level selectedLevel = Level.valueOf(spinner.getSelectedItem().toString());
+        // pass level and number of cities to SplitStreetView
+        Level selectedLevel = Level.valueOf(spinnerLevel.getSelectedItem().toString());
         Intent intent = new Intent(this, SplitStreetView.class);
         intent.putExtra("level", selectedLevel);
+        intent.putExtra("nbCity", (int) spinnerNbCity.getSelectedItem());
         startActivity(intent);
     }
 
-    private void populateSpinner() {
-        spinner = findViewById(R.id.difficultyLevel);
+    private void populateSpinners() {
+        spinnerLevel = findViewById(R.id.difficultyLevel);
         String[] levels = Level.getNames();
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(this, android.R.layout
                 .simple_spinner_item, levels);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        spinnerLevel.setAdapter(adapter);
+
+        PossibleLocationList possibleLocationList = new PossibleLocationList();
+        Integer[] nbCity = new Integer[possibleLocationList.numberOfPossibleLocations()];
+        for (int i = 0; i < nbCity.length; i++) {
+            nbCity[i] = i + 1;
+        }
+        ArrayAdapter<Integer> integerArrayAdapter = new ArrayAdapter<>(this, android.R.layout
+                .simple_spinner_item, nbCity);
+        integerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerNbCity = findViewById(R.id.nbCity);
+        spinnerNbCity.setAdapter(integerArrayAdapter);
     }
 }
