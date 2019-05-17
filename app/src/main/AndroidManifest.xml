@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme"
         android:name="com.orm.SugarApp">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB1iqthMV_WMs54Ljv4Ma97TlmXFvyoJXs"/>
+            android:value=""/>
         <meta-data android:name="DATABASE" android:value="geoguess.db" />
         <meta-data android:name="VERSION" android:value="11" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
